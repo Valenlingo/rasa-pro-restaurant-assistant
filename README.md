@@ -23,4 +23,8 @@ Features
 
 ### Restaurant reservation
 
+<img width="975" height="348" alt="image" src="https://github.com/user-attachments/assets/8f88b063-d9e3-468f-b819-92aa1212a99b" />
+
+### Alternative reservation
+
 <img width="1079" height="470" alt="image" src="https://github.com/user-attachments/assets/3e268ebe-b961-489c-b6ef-f5777b8d3ace" />

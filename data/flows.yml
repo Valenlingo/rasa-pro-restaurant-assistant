@@ -1,0 +1,99 @@
+flows:
+  saludar_user:
+    description: Greet the user when the user says hi or hola
+    steps:
+      - action: utter_greet
+  horarios_restaurante:
+    description: "Provide restaurant opening hours, closing times, and schedule information when users ask about when the restaurant is open, what time we close, or our business hours"
+    steps:
+    - action: utter_horarios_restaurante
+  consultar_menu:
+    description: "Proporciona información sobre el menú del restaurante, platos, opciones de comida, especialidades, tipo de cocina y comidas disponibles cuando los usuarios preguntan sobre comida, platos, qué hay en el menú, qué servimos, o qué tenemos para comer"
+    steps:
+      - action: utter_menu_info
+  goodbye_user:
+    description: Say goodbye to the user
+    steps:
+      - action: utter_bye
+  pattern_cannot_handle:
+    description: |
+      Conversation repair flow for addressing failed command generation scenarios
+    name: pattern cannot handle
+    steps:
+      - action: utter_default
+
+  hacer_reserva:
+    description: Ayuda a los clientes a hacer una reserva en el restaurante
+    steps:
+      - id: collect_numero
+        collect: numero_personas
+        description: Pregunta cuántas personas van a cenar
+      - action: action_validate_numero_personas
+        next:
+          - if: slots.numero_personas > 10
+            then:
+              - action: utter_large_group_call
+              - set_slots:
+                - numero_personas: null
+                next: END
+          - else: collect_fecha
+      - id: collect_fecha
+        collect: fecha_reserva
+        description: Pregunta qué día quieren hacer la reserva
+        rejections:
+          - if: slots.fecha_reserva == "domingo" or slots.fecha_reserva == "Domingo" or slots.fecha_reserva == "lunes" or slots.fecha_reserva == "Lunes"
+            utter: utter_closed_days
+      - id: collect_hora
+        collect: hora_reserva
+        description: Pregunta a qué hora prefieren cenar
+      - collect: nombre_cliente
+        description: Pregunta el nombre para la reserva
+      - collect: telefono_cliente
+        description: Pregunta el teléfono de contacto
+      - id: collect_confirmation
+        collect: final_confirmation
+        next:
+          - if: not slots.final_confirmation
+            then:
+              - action: utter_reservation_cancelled
+              - set_slots:
+                - numero_personas: null
+                - fecha_reserva: null
+                - hora_reserva: null
+                - nombre_cliente: null
+                - telefono_cliente: null
+                - final_confirmation: null
+                next: END
+          - else: confirmar_reserva
+      - id: confirmar_reserva
+        action: action_confirmar_reserva
+        next:
+          - if: slots.needs_confirmation
+            then: collect_alternative_confirmation
+          - else: END
+      - id: collect_alternative_confirmation
+        collect: alternative_confirmation
+        description: Confirma si acepta la hora alternativa sugerida
+        next:
+          - if: slots.alternative_confirmation
+            then:
+              - action: action_confirmar_reserva
+              - set_slots:
+                - alternative_confirmation: null
+                - needs_confirmation: null
+                next: END
+          - else:
+            - action: utter_reserva_no_confirmada
+            - set_slots:
+              - numero_personas: null
+              - fecha_reserva: null
+              - hora_reserva: null
+              - nombre_cliente: null
+              - telefono_cliente: null
+              - final_confirmation: null
+              - alternative_confirmation: null
+              - hora_reserva_sugerida: null
+              - needs_confirmation: null
+              next: END
+
+        

@@ -1,4 +1,7 @@
 # rasa-pro-restaurant-assistant
+
+Python Version: 3.11.12
+
 This repository is for a chatbot on RASA Pro that assists a Spanish restaurant mainly for reservations, but also for menu inquiries and other FAQs
 
 Spanish Restaurant Reservation Assistant built with Rasa Pro and CALM

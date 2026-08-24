@@ -1,0 +1,21 @@
+# Rasa generated files
+.rasa/
+models/
+
+# Python generated files
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+
+# Secrets
+.env
+
+# IDE / operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

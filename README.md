@@ -18,3 +18,9 @@ Features
 - Alternative time suggestions
 - Reservation confirmation and cancellation
 - Chitchat and fallback handling
+
+## Example Conversations
+
+### Restaurant reservation
+
+<img width="1079" height="470" alt="image" src="https://github.com/user-attachments/assets/3e268ebe-b961-489c-b6ef-f5777b8d3ace" />

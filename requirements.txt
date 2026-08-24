@@ -1,0 +1,4 @@
+rasa-pro
+rasa-sdk
+pandas
+openpyxl

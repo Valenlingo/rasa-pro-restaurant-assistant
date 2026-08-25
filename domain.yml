@@ -1,0 +1,167 @@
+version: "3.1"
+
+slots:
+  numero_personas:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_llm
+
+  fecha_reserva:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_llm
+
+  hora_reserva:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_llm
+
+  nombre_cliente:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_llm
+
+  telefono_cliente:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_llm
+
+  telefono_valido:
+    type: bool
+    influence_conversation: false
+    mappings:
+      - type: controlled
+
+  final_confirmation: 
+    type: bool
+    mappings: 
+      - type: from_llm
+
+  fecha_reserva_normalizada:
+    type: text
+    mappings:
+      - type: controlled
+
+  hora_reserva_normalizada:
+    type: text
+    mappings:
+      - type: controlled
+
+  needs_confirmation:
+    type: bool
+    influence_conversation: false
+    mappings:
+     - type: controlled
+
+  alternative_confirmation:
+    type: bool
+    mappings:
+      - type: from_llm
+
+  hora_reserva_sugerida:
+    type: text
+    influence_conversation: false
+    mappings:
+     - type: controlled
+
+
+responses:
+  utter_greet:
+    - text: "Hola, soy Salva el asistente virtual para el restaurante 'La Tentación de Madrid' ¿como puedo ayudarte?"
+    - text: "Bienvenido, soy Salva el asistente virtual para el restaurante 'La Tentación de Madrid'¿qué necesitas?"
+
+  utter_horarios_restaurante:
+    - text: "Abrimos de martes a sábado de 06 PM a 02 AM"
+
+  utter_menu_info:
+    - text: "Ofrecemos cocina española tradicional con toques modernos"
+
+  utter_bye:
+    - text: "¡De nada! Esperamos verte pronto."
+    - text: "¡Gracias a ti! Hasta pronto."
+    - text: "¡Ha sido un placer ayudarte! Nos vemos pronto."
+
+  utter_thanks:
+    - text: "¡De nada! Ha sido un placer ayudarte."
+    - text: "¡Gracias a ti! ¿Necesitas algo más?"
+
+  utter_can_do_something_else:
+    - text: ""
+
+  utter_default:
+    - text: "Lo siento, no entiendo tu mensaje. ¿Podrías reformularlo de otra manera?"
+    - text: "No estoy seguro de entender. ¿Puedes intentar preguntarme de otra forma?"
+    - text: "Disculpa, no comprendo. ¿Podrías ser más específico?"
+
+  utter_ask_numero_personas:
+    - text: "¿Para cuántas personas será la reserva?"
+
+  utter_large_group_call:
+    - text: "Para grupos de más de 10 personas, por favor llame directamente al restaurante al XXXX-XXXX para hacer su reserva. Gracias por su comprensión."
+
+  utter_ask_fecha_reserva:
+    - text: "¿Qué día te gustaría hacer la reserva? Recuerda que abrimos de martes a sábado"
+
+  utter_ask_hora_reserva:
+    - text: "¿A qué hora prefieres cenar? Recuerda tomamos reservas de 6:00 PM a 12:00 AM"
+
+  utter_invalid_time:
+    - text: "Por favor, ingresa una hora válida (por ejemplo: 6:00 PM o 9:30 PM)"
+
+  utter_invalid_phone:
+    - text: "Por favor, introduce un número de teléfono válido de al menos 7 dígitos."
+
+  utter_ask_nombre_cliente:
+    - text: "¿A qué nombre haré la reserva?"
+
+  utter_ask_telefono_cliente:
+    - condition:
+      - type: slot
+        name: telefono_valido
+        value: false
+      text: "Ese número no parece válido. Por favor, introduce un teléfono de al menos 7 dígitos."
+
+    - text: "¿Podrías darme un teléfono de contacto?"
+
+  utter_ask_final_confirmation:
+    - text: "Por favor confirma: ¿quieres hacer la reserva para {numero_personas} personas el {fecha_reserva} a las {hora_reserva} a nombre de {nombre_cliente}?"
+
+  utter_reservation_cancelled:
+    - text: "Tu reserva ha sido cancelada. Empecemos de nuevo"
+
+  utter_ask_alternative_confirmation:
+    - text: "¿Quieres reservar a las {hora_reserva_sugerida}?"
+
+  utter_reserva_no_confirmada:
+    - text: "Entiendo. Si cambias de opinión, estaré aquí para ayudarte con tu reserva."
+
+  utter_closed_days:
+    - text: "Estamos cerrados los domingos y lunes, por favor elige otro día de la semana"
+
+  utter_free_chitchat_response:
+    - text: "placeholder"
+      metadata:
+        rephrase: True
+        rephrase_prompt: |
+          Esto es una conversación con un agente conversacional creado por RASA.
+          Este asistente te puede ayudar a saber información sobre el restaurante La Tentación de Madrid, como horarios, comida o asistencia en gestión de reservas.
+          Este asistente puede tener conversaciones ligeras.
+          Este asistente debe siempre contestar en español.
+          Horarios: Abrimos de martes a sábado de 06PM a 02AM
+          Comida: Cocina española tradicional con toques modernos
+          Context / previous conversation with the user:
+          {{history}}
+          {{current_input}}
+          Suggested AI Response:
+
+actions:
+  - action_default_fallback
+  - action_validate_numero_personas
+  - action_normalize_hora
+  - action_validate_telefono_cliente
+  - action_confirmar_reserva

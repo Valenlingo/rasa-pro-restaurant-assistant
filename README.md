@@ -24,10 +24,20 @@ Features
 
 ## Example Conversations
 
-### Restaurant reservation
+### Restaurant reservation - Happy Path
 
-<img width="975" height="348" alt="image" src="https://github.com/user-attachments/assets/8f88b063-d9e3-468f-b819-92aa1212a99b" />
+<img width="484" height="709" alt="image" src="https://github.com/user-attachments/assets/8a94703c-9b4f-478b-8e86-17b293cb8880" />
+
+<img width="464" height="704" alt="image" src="https://github.com/user-attachments/assets/52468122-fc0b-4ad9-b283-0dc59e141495" />
+
+<img width="467" height="567" alt="image" src="https://github.com/user-attachments/assets/f0dc311b-edfd-42bc-8645-39774f148848" />
 
 ### Alternative reservation
 
-<img width="1079" height="470" alt="image" src="https://github.com/user-attachments/assets/3e268ebe-b961-489c-b6ef-f5777b8d3ace" />
+<img width="482" height="700" alt="image" src="https://github.com/user-attachments/assets/9eb6b6a2-1492-4162-8f55-5eab057295b9" />
+
+<img width="489" height="710" alt="image" src="https://github.com/user-attachments/assets/2b002af0-9df0-4c75-bdc7-4b415fced9db" />
+
+<img width="457" height="685" alt="image" src="https://github.com/user-attachments/assets/18d61654-a7b8-40f9-bbb1-619fea05c19b" />
+
+<img width="464" height="500" alt="image" src="https://github.com/user-attachments/assets/9acf3670-6ce6-494d-ae6f-0352e88931fc" />

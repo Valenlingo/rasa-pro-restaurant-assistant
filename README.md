@@ -10,17 +10,33 @@ A conversational assistant that handles restaurant information and table reserva
 The assistant uses Rasa Pro flows and custom Python actions to collect reservation information, validate user input, check table availability,
 and suggest alternative reservation times when the requested slot is unavailable.
 
-Features
+Key Features
 - Spanish-language conversational interface
-- Restaurant opening-hours and menu queries
 - Multi-step reservation flow
-- Slot collection for date, time, party size, name and phone
-- Input validation
-- Custom Python actions
-- Availability checking using structured restaurant data
-- Alternative time suggestions
-- Reservation confirmation and cancellation
-- Chitchat and fallback handling
+- Validation of party size, time, and phone number
+- Restaurant opening-hours and menu queries
+- Table availability lookup
+- Automatic selection of an appropriately sized table
+- Alternative-time suggestions when the requested slot is unavailable
+- Reads reservation availability from Excel
+- Updates table status from `Available` to `Booked`
+- Saves customer name, phone number, and party size to Excel
+- Persists reservation changes back to the spreadsheet
+- Chitchat, greetings, thanks, and goodbye handling
+
+## Reservation Data Management
+
+Restaurant availability is stored in `restaurant_availability.xlsx`.
+
+Custom Python actions use `pandas` and `openpyxl` to:
+
+1. Read current table availability
+2. Find a suitable table based on party size
+3. Select the smallest available table that can accommodate the group
+4. Suggest an alternative time when necessary
+5. Mark confirmed tables as `Booked`
+6. Save the customer's name, phone number, and party size
+7. Persist the updated reservation data back to the Excel file
 
 ## Example Conversations
 
